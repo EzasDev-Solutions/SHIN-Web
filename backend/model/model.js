@@ -5,9 +5,9 @@ const modelDB = {
         return new Promise((resolve, reject) => {
             pool.query(`Select * from model`, (error, result) => {
                 if (error) {
-                    reject({ status: 500, error: error })
+                    reject({ status: 500, msg: error })
                 }
-                if (result.length === 0) reject({ status: 404, error: 'Model not found' })
+                if (result.length === 0) reject({ status: 404, msg: 'Model not found' })
                 resolve({ status: 200, result: result })
             })
         })
@@ -16,9 +16,9 @@ const modelDB = {
         return new Promise((resolve, reject) => {
             pool.query(`Select * from model where id =?`, [data], (error, result) => {
                 if (error) {
-                    reject({ status: 500, error: error })
+                    reject({ status: 500, msg: error })
                 }
-                if (result.length === 0) reject({ status: 404, error: 'Model not found' })
+                if (result.length === 0) reject({ status: 404, msg: 'Model not found' })
                 resolve({ status: 200, result: result })
             })
         })
@@ -27,9 +27,9 @@ const modelDB = {
         return new Promise((resolve, reject) => {
             pool.query(`Select * from model where model_name LIKE ?`, [`%${data}%`], (error, result) => {
                 if (error) {
-                    reject({ status: 500, error: error })
+                    reject({ status: 500, msg: error })
                 }
-                if (result.length === 0) reject({ status: 404, error: 'Model not found' })
+                if (result.length === 0) reject({ status: 404, msg: 'Model not found' })
                 resolve({ status: 200, result: result })
             })
         })
