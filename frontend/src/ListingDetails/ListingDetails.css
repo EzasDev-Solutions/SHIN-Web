@@ -1,9 +1,38 @@
-.photo-gallary {
-    width: 400px;
-    height: 560px;
+.profile-images {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.thumbnail {
+.profile-images .photo-gallary {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-images .thumbnail {
     width: 57px !important;
     height: 80px !important;
+    cursor: pointer;
+}
+
+#carousel-thumb {
+    height: 560px;
+    width: 100%;
+}
+
+.model-name {
+    text-align: left;
+}
+
+.book-btn {
+    background-color: #3D3D3D;
+    color: white;
+    font-family: 'Medio', sans-serif;
+    font-size: 26px;
+    width: 120px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 10%;
 }

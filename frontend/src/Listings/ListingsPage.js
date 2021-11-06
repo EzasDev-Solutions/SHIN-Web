@@ -46,7 +46,7 @@ function ListingsPage(props) {
     }
 
     return (
-        <div className="container">
+        <div className="container mb-5">
             <BackdropLoader open={loader} />
             <div className="row">
                 <div className="title col-sm-12">{props.category}</div>

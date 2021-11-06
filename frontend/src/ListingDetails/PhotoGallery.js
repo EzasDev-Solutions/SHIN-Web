@@ -4,7 +4,7 @@ function PhotoGallery({ images }) {
     return (
         <>
             <div className="photo-gallary">
-                <div id="carousel-thumb" className="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                <div id="carousel-thumb" className="carousel slide carousel-fade carousel-thumbnails mb-3" data-ride="carousel">
                     <div className="carousel-inner" role="listbox">
                         {images.map((image, index) => {
                             return (
@@ -23,7 +23,7 @@ function PhotoGallery({ images }) {
                     </a>
                 </div>
                 {images.map((image, index) => {
-                    return (<span data-target="#carousel-thumb" className={index === 0 ? "active" : ""} data-slide-to={index} key={index}>
+                    return (<span data-target="#carousel-thumb" className={index === 0 ? "active" : "ml-3"} data-slide-to={index} key={index}>
                                 <img className="thumbnail img-fluid" src={image}/>
                             </span>)
                 })}
