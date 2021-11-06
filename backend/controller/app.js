@@ -5,6 +5,8 @@ const cors = require('cors');
 const path = require('path');
 //model files below
 const userDB = require('../model/user')
+const modelDB = require('../model/model')
+const token = require('../middleware/token')
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -14,10 +16,40 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'index.html'));
 });
 
-app.get('/users', (req, res) => {
-    userDB.getAllUsers()
-        .then((result) => res.status(200).send(result))
-        .catch((err) => res.status(500).send(err))
+//User APIs
+app.post('/register', (req, res) => {
+    userDB.userRegister(req.body)
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
+})
+app.post('/login', (req, res) => {
+    userDB.userLogin(req.body)
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
+})
+app.delete('/logout', (req, res) => {
+    userDB.userLogout(req.body)
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
+})
+
+//Model APIs
+app.get('/model', (req, res) => {
+    modelDB.getAllModels()
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
+})
+
+app.get('/model/:id', (req, res) => {
+    modelDB.getModelById(req.params.id)
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
+})
+
+app.get('/searchModel/:search', (req, res) => {
+    modelDB.searchModel(req.params.search)
+        .then((result) => res.status(result.status).send(result.result))
+        .catch((err) => res.status(err.status).send(err.error))
 })
 
 module.exports = app
