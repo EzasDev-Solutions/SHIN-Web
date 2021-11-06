@@ -3,7 +3,7 @@ const pool = require('./databaseConfig')
 const modelDB = {
     getAllModels: () => {
         return new Promise((resolve, reject) => {
-            pool.query(`Select * from model`, (error, result) => {
+            pool.query(`Select * from model m, image i where m.model_id = i.fk_model_id group by m.model_id`, (error, result) => {
                 if (error) {
                     return reject({ status: 500, msg: error })
                 }
@@ -28,17 +28,18 @@ const modelDB = {
                 ms.fk_service_id = s.service_id and m.model_id=?`, data, (error2, result2) => {
                     // console.log(result2)
                     if (error2) return reject({ status: 500, msg: error })
-                    pool.query(`Select * from model m, image i where m.model_id = i.fk_model_id and m.model_id =?`, data, (error3, result3) => {
-                        if (error3) return reject({ status: 500, msg: error })
-                        result.map(r => languages.push(r.language))
-                        result[0].languages = languages
-                        delete result[0].language
-                        result2.map(z => services.push(z.service))
-                        result[0].services = result2.map(a => a.service)
-                        result3.map(f => images.push(f.image_link))
-                        result[0]['image_link'] = images
-                        resolve({ status: 200, result: result[0] })
-                    })
+                    pool.query(`Select * from model m, image i where m.model_id = i.fk_model_id and m.model_id =?`, data,
+                        (error3, result3) => {
+                            if (error3) return reject({ status: 500, msg: error })
+                            result.map(r => languages.push(r.language))
+                            result[0].languages = languages
+                            delete result[0].language
+                            result2.map(z => services.push(z.service))
+                            result[0].services = result2.map(a => a.service)
+                            result3.map(f => images.push(f.image_link))
+                            result[0]['image_link'] = images
+                            resolve({ status: 200, result: result[0] })
+                        })
                 })
             })
         })
