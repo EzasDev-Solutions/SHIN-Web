@@ -19,25 +19,25 @@ app.get('/', (req, res) => {
 //User APIs
 app.post('/register', (req, res) => {
     userDB.userRegister(req.body)
-        .then(result => res.status(result.status).send(result.result))
-        .catch(err => res.status(err.status).send(err.error))
+        .then(result => res.status(result.status).send({status: result.status, data: result.result}))
+        .catch(err => res.status(err.status).send({status: err.status, data: err.error}))
 })
 app.post('/login', (req, res) => {
     userDB.userLogin(req.body)
-        .then(result => res.status(result.status).send(result.result))
-        .catch(err => res.status(err.status).send(err.error))
+        .then(result => res.status(result.status).send({status: result.status, data: result.result}))
+        .catch(err => res.status(err.status).send({status: err.status, data: err.error}))
 })
 app.delete('/logout', (req, res) => {
     userDB.userLogout(req.body)
-        .then(result => res.status(result.status).send(result.result))
-        .catch(err => res.status(err.status).send(err.error))
+        .then(result => res.status(result.status).send({status: result.status, data: result.result}))
+        .catch(err => res.status(err.status).send({status: err.status, data: err.error}))
 })
 
 //Model APIs
 app.get('/model', (req, res) => {
     modelDB.getAllModels()
-        .then(result => res.status(result.status).send(result.result))
-        .catch(err => res.status(err.status).send(err.error))
+        .then(result => res.status(result.status).send({status: result.status, data: result.result}))
+        .catch(err => res.status(err.status).send({status: err.status, data: err.error}))
 })
 
 app.get('/model/:id', (req, res) => {
@@ -48,8 +48,8 @@ app.get('/model/:id', (req, res) => {
 
 app.get('/searchModel/:search', (req, res) => {
     modelDB.searchModel(req.params.search)
-        .then(result => res.status(result.status).send(result.result))
-        .catch(err => res.status(err.status).send(err.error))
+        .then(result => res.status(result.status).send({status: result.status, data: result.result}))
+        .catch(err => res.status(err.status).send({status: err.status, data: err.error}))
 })
 
 module.exports = app
