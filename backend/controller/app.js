@@ -8,6 +8,7 @@ const userDB = require('../model/user')
 const modelDB = require('../model/model')
 const token = require('../middleware/token')
 
+var prefix = "/api/v1";
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
@@ -17,36 +18,36 @@ app.get('/', (req, res) => {
 });
 
 //User APIs
-app.post('/register', (req, res) => {
+app.post(`${prefix}/register`, (req, res) => {
     userDB.userRegister(req.body)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
-app.post('/login', (req, res) => {
+app.post(`${prefix}/login`, (req, res) => {
     userDB.userLogin(req.body)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
-app.delete('/logout', (req, res) => {
+app.delete(`${prefix}/logout`, (req, res) => {
     userDB.userLogout(req.body)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
 
 //Model APIs
-app.get('/model', (req, res) => {
+app.get(`${prefix}/model`, (req, res) => {
     modelDB.getAllModels()
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
 
-app.get('/model/:id', (req, res) => {
+app.get(`${prefix}/model/:id`, (req, res) => {
     modelDB.getModelById(req.params.id)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
 
-app.get('/searchModel/:search', (req, res) => {
+app.get(`${prefix}/searchModel/:search`, (req, res) => {
     modelDB.searchModel(req.params.search)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))

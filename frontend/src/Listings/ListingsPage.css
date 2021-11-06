@@ -1,0 +1,33 @@
+.title {
+    font-family: "Italiana";
+    font-size: 2em;
+    text-align: left;
+}
+
+.list-item .list-content {
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.list-item .model-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.list-item .price {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.list-item .country {
+    font-size: 18px;
+    margin-left: 6px;
+}
+
+.list-item .model-image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+}

@@ -1,8 +1,22 @@
+@font-face {
+  font-family: 'Italiana';
+  src: local('Italiana'), url(./assets/fonts/Italiana/Italiana-Regular.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Medio';
+  src: local('Medio'), url(./assets/fonts/medio/medio.otf) format('otf');
+}
+
+@font-face {
+  font-family: 'Segoe UI';
+  src: local('Segoe UI'), url(./assets/fonts/segoe-ui/Segoe-UI.ttf) format('ttf');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif, 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

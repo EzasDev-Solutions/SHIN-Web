@@ -1,0 +1,9 @@
+.photo-gallary {
+    width: 400px;
+    height: 560px;
+}
+
+.thumbnail {
+    width: 57px !important;
+    height: 80px !important;
+}
