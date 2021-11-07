@@ -19,3 +19,18 @@ nav {
 .nav-item .active {
     border-bottom: 2px solid black;
 }
+
+#loginModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 680px;
+    height: 738px;
+    background-color: #FFF;
+    border-radius: 6px;
+    outline: none;
+    text-align: center;
+    padding-block: 24px;
+    padding-inline: 39px;
+}

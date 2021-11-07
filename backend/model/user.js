@@ -30,14 +30,14 @@ const userDB = {
                 bcrypt.compare(data.password, result[0].password, (err, valid) => {
                     if (err) return reject({ status: 500, msg: err })
                     if (!valid) return reject({ status: 401, msg: 'Incorrect password' })
-                    let sql3 = `Insert into token(token, fk_user_id) values (?,?)`
                     pool.query(`Select * from token where fk_user_id = ?`, result[0].user_id, (error, result2) => {
                         if (error) return reject({ status: 500, msg: error })
-                        if (result2.length !== 0) return reject({status: 403, msg: 'User is already logged in'})
-                        pool.query(sql3, [uuidv4(), result[0].user_id], (error, result) => {
-                            if (error) return reject({ status: 500, msg: error })
-                            resolve({ status: 200, result: result })
-                        })
+                        if (result2.length !== 0) return reject({ status: 403, msg: 'User is already logged in' })
+                        pool.query(`Insert into token(token, fk_user_id) values (?,?);Select token from token where fk_user_id = ?`,
+                            [uuidv4(), result[0].user_id, result[0].user_id], (error, result) => {
+                                if (error) return reject({ status: 500, msg: error })
+                                resolve({ status: 200, result: { result: result, apiToken: result[1][0].token } })
+                            })
                     })
                 })
             })
