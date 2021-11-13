@@ -46,7 +46,7 @@ function Navbar(props) {
                 </ul>
                 <ul className="navbar-nav ml-auto mr-5">
                     <li className="nav-item">
-                        <div className="nav-link nav-btn" onClick="">
+                        <div className="nav-link nav-btn">
                             <img src={searchIcon} alt="Search" />
                         </div>
                     </li>
@@ -56,7 +56,7 @@ function Navbar(props) {
                         </div>
                     </li>
                     <li className="nav-item ml-4">
-                        <Link className="nav-link" to="/orderhistory">
+                        <Link className="nav-link" to="/orderHistory">
                             <img src={orderHistoryIcon} alt="Order History" />
                         </Link>
                     </li>

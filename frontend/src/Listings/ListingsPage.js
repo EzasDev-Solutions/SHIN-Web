@@ -5,7 +5,7 @@ import ListItem from './ListItem'
 import ListingsService from '../Services/listingsService'
 import swal from 'sweetalert'
 import { BackdropLoader } from "../ShareComponents/loader";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 function ListingsPage(props) {
@@ -17,7 +17,6 @@ function ListingsPage(props) {
     const [maleModelList, setMaleModelList] = useState([])
     const [loader, setloader] = useState(false)
     let history = useHistory();
-    let location = useLocation();
 
     const getModelData = async () => {
         setloader(true);
@@ -42,7 +41,7 @@ function ListingsPage(props) {
     }
 
     const handleModelClick = (modelId) => {
-        history.push(`${location.pathname}/${modelId}`);
+        history.push(`/model/${modelId}`);
     }
 
     return (

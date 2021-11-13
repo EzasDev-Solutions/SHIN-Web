@@ -9,6 +9,7 @@ import {
 import Navbar from './Navbar/Navbar';
 import ListingsPage from '../Listings/ListingsPage';
 import ListingDetails from '../ListingDetails/ListingDetails';
+import OrderHistory from '../OrderHistory/OrderHistory';
 
 function Routes() {
     return (
@@ -24,32 +25,22 @@ function Routes() {
                     </Navbar>
                 </Route>
 
-                <Route exact path="/ladies/:id">
-                    <Navbar>
-                        <ListingDetails />
-                    </Navbar>
-                </Route>
-
                 <Route exact path="/men">
                     <Navbar>
                         <ListingsPage category="Men"/>
                     </Navbar>
                 </Route>
 
-                <Route exact path="/men/:id">
+                <Route exact path="/model/:id">
                     <Navbar>
                         <ListingDetails />
                     </Navbar>
                 </Route>
 
-                <Route exact path="/orderhistory">
+                <Route exact path="/orderHistory">
                     <Navbar>
-                        <div>Order History</div>
+                        <OrderHistory />
                     </Navbar>
-                </Route>
-
-                <Route exact path="/orderhistory/:id">
-                    <div>Order History Details</div>
                 </Route>
 
                 <Route exact path="/payment/:id">

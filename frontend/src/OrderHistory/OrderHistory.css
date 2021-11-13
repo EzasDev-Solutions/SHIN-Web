@@ -1,0 +1,49 @@
+.title {
+    font-family: "Italiana";
+    font-size: 2em;
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.seperator {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin-left: auto;
+    margin-right: auto;
+    width: 91%;
+}
+
+.order-item {
+    padding-bottom: 5rem;
+    padding-top: 5rem;
+}
+
+.order-item .custom-link {
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.order-item .custom-link:hover {
+    color: #0b5db5 !important;
+}
+
+.order-item .model-image {
+    width: 148px;
+    height: 194px;
+    object-fit: cover;
+}
+
+
+
+@media only screen and (max-width: 575px) {
+    .payment-details .key {
+        width: 30%;
+    }
+    .payment-details .value {
+        width: 70%;
+        text-align: right;
+    }
+    .order-item h4 {
+        margin-top: 15px;
+    }
+  }
