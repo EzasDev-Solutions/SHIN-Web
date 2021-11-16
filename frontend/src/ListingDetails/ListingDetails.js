@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react'
 import PhotoGallery from './PhotoGallery'
 import listingsService from '../Services/listingsService';
 import "./ListingDetails.css";
-import { useParams } from 'react-router';
+import { useParams, Link } from 'react-router-dom';
 import locationIcon from "../assets/images/location-icon.png"
 import arrowIcon from "../assets/images/arrows.png"
+import Login from '../Login/Login';
 
 function ListingDetails() {
     useEffect(() => {
         getModelDetailsData();
     }, []);
 
+    const [openModal, setOpenModal] = useState(false)
     const [loader, setloader] = useState(false);
     const [model, setmodel] = useState(null);
     const [images, setimages] = useState([])
@@ -25,21 +27,21 @@ function ListingDetails() {
     }
 
     const handleBooking = () => {
-        console.log("Book button clicked!");
+        if (localStorage.getItem('apiToken') === null) setOpenModal(true)
     }
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="profile-images col-xl-4 col-lg-12 col-md-12 col-sm-12">
-                    <PhotoGallery images={images}/>
+                    <PhotoGallery images={images} />
                 </div>
                 <div className="col-xl-8 col-lg-12 col-md-12 col-sm-12">
                     <div className="row">
                         <div className="col-5">
                             <h1 className="model-name">{model && model.model_name}</h1>
                             <div className="d-flex align-items-center">
-                                <img src={locationIcon} style={{ height:"15px" }}/>
+                                <img src={locationIcon} style={{ height: "15px" }} />
                                 <span className="country ml-1">{model && model.country}</span>
                             </div>
 
@@ -60,14 +62,20 @@ function ListingDetails() {
 
                             <div className="text-left">
                                 <div>Availability</div>
-                                <div className="font-weight-bold mt-2">{model && model.availability}</div>
+                                <div className="font-weight-bold mt-2">
+                                    {model && `${new Date(model.start_date).toLocaleDateString("en-us", { month: 'long', year: 'numeric' })} -
+                                    ${new Date(model.end_date).toLocaleDateString("en-us", { month: 'long', year: 'numeric' })}`}
+                                </div>
                             </div>
                         </div>
-                        
+
                         <div className="col-7">
                             <div className="row">
                                 <div className="col-12">
-                                    <div className="book-btn shadow" onClick={handleBooking}>Book</div>
+                                    <div className="book-btn shadow" onClick={handleBooking}>
+                                        {localStorage.getItem('apiToken') === null ? 'Book' :
+                                            <Link to={`/payment/${id}`} style={{ color: '#FFF' }}>Book</Link>}
+                                    </div>
                                 </div>
 
                                 <div className="col-12 text-left mt-5 px-5 pt-4">
@@ -81,7 +89,7 @@ function ListingDetails() {
                                         {model && model.services.map((service, index) => {
                                             return (
                                                 <div className="col-6 mb-4" key={index}>
-                                                    <img src={arrowIcon} style={{ height:"40px", width: "40px" }}/>
+                                                    <img src={arrowIcon} style={{ height: "40px", width: "40px" }} />
                                                     <span className="ml-3">{service}</span>
                                                 </div>
                                             );
@@ -93,6 +101,7 @@ function ListingDetails() {
                     </div>
                 </div>
             </div>
+            {openModal && <Login openModal={openModal} setOpenModal={setOpenModal} />}
         </div>
     )
 }

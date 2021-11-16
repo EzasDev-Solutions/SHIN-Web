@@ -6,6 +6,7 @@ const path = require('path');
 //model files below
 const userDB = require('../model/user')
 const modelDB = require('../model/model')
+const orderDB = require('../model/order')
 const token = require('../middleware/token')
 
 var prefix = "/api/v1";
@@ -28,8 +29,9 @@ app.post(`${prefix}/login`, (req, res) => {
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
-app.delete(`${prefix}/logout`, (req, res) => {
-    userDB.userLogout(req.body)
+app.delete(`${prefix}/logout/:fk_user_id`, (req, res) => {
+    console.log(req.params)
+    userDB.userLogout(req.params)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })
@@ -49,6 +51,25 @@ app.get(`${prefix}/model/:id`, (req, res) => {
 
 app.get(`${prefix}/searchModel/:search`, (req, res) => {
     modelDB.searchModel(req.params.search)
+        .then(result => res.status(result.status).send(result.result))
+        .catch(err => res.status(err.status).send(err.error))
+})
+
+app.get(`${prefix}/modelSlot/:model_id/:date`, (req, res) => {
+    modelDB.getModelSlots(req.params)
+        .then(result => res.status(result.status).send(result.result))
+        .catch(err => res.status(err.status).send(err.error))
+})
+
+//Order APIs
+app.get(`${prefix}/orderHistory/:user_id`, (req, res) => {
+    orderDB.getOrderByUserId(req.params)
+        .then(result => res.status(result.status).send(result.result))
+        .catch(err => res.status(err.status).send(err.error))
+})
+
+app.post(`${prefix}/addOrder`, (req, res) => {
+    orderDB.addOrder(req.body)
         .then(result => res.status(result.status).send(result.result))
         .catch(err => res.status(err.status).send(err.error))
 })

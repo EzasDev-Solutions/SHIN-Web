@@ -16,8 +16,7 @@ function OrderHistory() {
 
     const getOrderHistory = async () => {
         setloader(true);
-        const response = { data: ["1"], }; //await OrderService.getOrderHistory();
-
+        const response = await OrderService.getOrderHistory(JSON.parse(localStorage.getItem('user')).user_id);
         if(response && response.data){
             setOrderList(response.data);
         }

@@ -18,7 +18,7 @@ const modelDB = {
         let images = []
         return new Promise((resolve, reject) => {
             pool.query(`Select m.model_id, m.model_name, m.country, m.description, m.age, m.rate, m.height, m.booked,
-            m.availability, m.gender, l.language from model m, model_language ml, language l where m.model_id = ml.fk_model_id and 
+            m.start_date, m.end_date, m.gender, m.created_at, l.language from model m, model_language ml, language l where m.model_id = ml.fk_model_id and 
             ml.fk_language_id = l.language_id and m.model_id =?`, data, (error, result) => {
                 if (error) {
                     return reject({ status: 500, msg: error })
@@ -53,6 +53,17 @@ const modelDB = {
                 if (result.length === 0) return reject({ status: 404, msg: 'Model not found' })
                 resolve({ status: 200, result: result })
             })
+        })
+    },
+    getModelSlots: (data) => {
+        return new Promise((resolve, reject) => {
+            pool.query('Select * from `order` o, model_booked_slots mbs where o.fk_model_id =? and o.date =?',
+                [data.model_id, data.date], (error, result) => {
+                    if (error) {
+                        return reject({ status: 500, msg: error })
+                    }
+                    resolve({ status: 200, result: result })
+                })
         })
     }
 }

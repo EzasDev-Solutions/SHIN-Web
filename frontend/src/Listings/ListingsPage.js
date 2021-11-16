@@ -12,7 +12,6 @@ function ListingsPage(props) {
     useEffect(() => {
         getModelData();
     }, []);
-
     const [femaleModelList, setFemaleModelList] = useState([])
     const [maleModelList, setMaleModelList] = useState([])
     const [loader, setloader] = useState(false)
