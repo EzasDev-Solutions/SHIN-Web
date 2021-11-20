@@ -135,7 +135,7 @@ export default function Payment() {
                     ))}
                 </div>
             </Grid>
-            <Grid item lg={3} md={5} sm={12} xs={12} sx={{ pt: 4, textAlign: 'left', pr: 4 }}>
+            <Grid item lg={3} md={5} sm={12} xs={12} sx={{ pt: 4, textAlign: 'left', paddingInline: 5 }}>
                 <h2 style={{ fontWeight: 'bold' }}>Summary</h2>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40 }}>
                     <h4>Subtotal</h4>
