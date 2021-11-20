@@ -75,19 +75,19 @@ export default function Payment() {
     }, [timing])
     return (
         <Grid container>
-            <Grid item lg={3.5} md={12} sm={12} xs={12} sx={{ pt: 4 }}>
+            <Grid item lg={3.5} md={12} sm={12} xs={12} sx={{ pt: 4, pb: 4 }}>
                 {model && <img src={model.image_link[0]} width={260} height={360} alt={model.model_name} />}
             </Grid>
             <Grid item lg={5.5} md={7} sm={12} xs={12} sx={{ pt: 4 }}>
                 <div style={{ display: 'flex', marginBottom: 100 }}>
-                    <div style={{ marginRight: 120 }}>
+                    <div style={{ marginRight: 90 }}>
                         <h1 className="model-name">{model && model.model_name}</h1>
                         <div className="d-flex align-items-center">
                             <img src={locationIcon} style={{ height: "15px" }} />
                             <span className="country ml-1">{model && model.country}</span>
                         </div>
                     </div>
-                    <div style={{ marginRight: 120, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div style={{ marginRight: 90, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <h6 style={{ marginTop: 10 }}>Rates</h6>
                         <h6 style={{ fontWeight: 'bold' }}>${model && model.rate} / hr</h6>
                     </div>
@@ -124,7 +124,7 @@ export default function Payment() {
                         <div key={index} style={{ display: 'flex', marginTop: 20 }}>
                             {arr.map((time, i) => (
                                 <div key={i} style={{
-                                    border: `1px solid ${!timing.includes(time) ? 'lightgray' : 'black'}`, borderRadius: 6,
+                                    border: `${!timing.includes(time) ? '1px solid lightgray' : '1.5px solid black'}`, borderRadius: 6,
                                     cursor: 'pointer', width: 120, height: 50, paddingTop: 10, marginRight: 40, fontSize: 18,
                                     fontFamily: 'Segoe UI'
                                 }} onClick={() => bookTime(time)}>
