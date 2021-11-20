@@ -62,6 +62,11 @@ app.get(`${prefix}/modelSlot/:model_id/:date`, (req, res) => {
 })
 
 //Order APIs
+app.get(`${prefix}/order/:order_id`, (req, res) => {
+    orderDB.getOrderByOrderId(req.params)
+        .then(result => res.status(result.status).send(result.result))
+        .catch(err => res.status(err.status).send(err.error))
+})
 app.get(`${prefix}/orderHistory/:user_id`, (req, res) => {
     orderDB.getOrderByUserId(req.params)
         .then(result => res.status(result.status).send(result.result))

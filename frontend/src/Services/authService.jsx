@@ -5,10 +5,11 @@ export async function login(data) {
         email: data.email,
         password: data.password,
     });
-    // alert(JSON.stringify(response.data))
+    // alert(JSON.stringify(response))
     if (response && response.data) {
         setApiToken(response.data.apiToken);
         setUserInfo(response.data.result)
+        // window.location.reload()
     }
     return response;
 }

@@ -35,7 +35,7 @@ function OrderHistory() {
             </div>
             <div className="row">
                 {orderList.map((order, index) => {
-                    return <OrderItem data={order} key={index} handleLinkClick={handleModelClick} />
+                    return <OrderItem data={order} key={index} handleLinkClick={handleModelClick} order_id={order.fk_order_id} />
                 })}
             </div>
         </div>

@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { getModelDetails } from '../Services/listingsService';
-function OrderItem({ data, handleLinkClick }) {
+import { getOrderDetails } from '../Services/orderService';
+function OrderItem({ data, handleLinkClick, order_id }) {
     const [model, setModel] = useState(null)
+    const [orderDetail, setOrderDetail] = useState()
     useEffect(() => {
+        const getOrderDetailsData = async () => {
+            const response = await getOrderDetails(order_id)
+            setOrderDetail(response.data)
+        }
         const getModelDetailsData = async () => {
             const response = await getModelDetails(data.fk_model_id);
             setModel(response.data);
         }
         getModelDetailsData()
+        getOrderDetailsData()
     }, [])
     return (
         <>
@@ -57,11 +64,14 @@ function OrderItem({ data, handleLinkClick }) {
                         <div className="d-flex flex-wrap mt-4">
                             <div className="w-25 text-left">Time Slot</div>
                             <div className="w-75 text-right">
-                                {Number(data.start_time.slice(0, 2)) > 11 ?
-                                    `${Number(data.start_time.slice(0, 2)) - 12}pm` : `${Number(data.start_time.slice(0, 2))}am`} |
-                                {Number(data.start_time.slice(0, 2)) + Number(data.duration.charAt(0)) > 12 ?
-                                    ` ${Number(data.start_time.slice(0, 2)) + Number(data.duration.charAt(0)) - 12}pm` :
-                                    ` ${Number(data.start_time.slice(0, 2)) + Number(data.duration.charAt(0))}am`}
+                                {orderDetail && orderDetail.map(c => Number(c.start_time.slice(0, 2))).sort((a, b) => a - b)
+                                    .map((o, index) => (
+                                        <>
+                                            &nbsp;{o > 11 ?
+                                                `${o - (o !== 12 ? 12 : 0)}pm` :
+                                                `${o}am`} {index !== orderDetail.length - 1 && '|'}
+                                        </>
+                                    ))}
                             </div>
                         </div>
                         <div onClick={() => handleLinkClick(data.fk_model_id)} className="text-primary custom-link">

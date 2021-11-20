@@ -25,7 +25,6 @@ export default function Payment() {
     const [loader, setloader] = useState(false);
     const [value, setValue] = useState(new Date())
     const [amount, setAmount] = useState(0)
-    const [checkout, setCheckout] = useState(false)
     let { id } = useParams();
 
     const getModelDetailsData = async () => {
@@ -49,17 +48,16 @@ export default function Payment() {
     const handleChange = (newValue) => {
         setTiming([])
         setValue(newValue);
-        setCheckout(false)
     };
     const bookTime = (time) => {
-        setCheckout(false)
-        if (timing.includes(time)) {
-            let newTiming = timing
+        let newTiming = timing
+        if (newTiming.includes(time)) {
             newTiming = newTiming.filter(t => t !== time)
             setTiming(newTiming)
             return
-        }
-        setTiming([...timing, time])
+        }   
+        newTiming.push(time)
+        setTiming([...newTiming])
     }
     useEffect(() => {
         getModelDetailsData();
@@ -95,7 +93,8 @@ export default function Payment() {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <h6 style={{ marginTop: 10 }}>Availability</h6>
-                        <h6 style={{ fontWeight: 'bold' }}>{model && model.availability}</h6>
+                        <h6 style={{ fontWeight: 'bold' }}>{model && `${new Date(model.start_date).toLocaleDateString("en-us", { month: 'long', year: 'numeric' })} -
+                                    ${new Date(model.end_date).toLocaleDateString("en-us", { month: 'long', year: 'numeric' })}`}</h6>
                     </div>
                 </div>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -147,8 +146,8 @@ export default function Payment() {
                     <h4>Total</h4>
                     <h4>SGD <span><b>${amount}</b></span></h4>
                 </div>
-                {!checkout ? <Button sx={{
-                    fontFamily: 'Segoe UI', backgroundColor: '#3D3D3D', color: '#FFF', mt: 2, width: 400, height: 40,
+                {/* {!checkout ? <Button sx={{
+                    fontFamily: 'Segoe UI', backgroundColor: '#3D3D3D', color: '#FFF', mt: 5, width: 400, height: 40,
                     textTransform: 'none'
                 }} onClick={() => {
                     if (amount > 0) setCheckout(true)
@@ -156,10 +155,13 @@ export default function Payment() {
                         alert('Select a time slot')
                     }
                 }}>Checkout</Button> :
-                    <PaypalButton model={model} timing={timing} date={value} />}
+                    <PaypalButton model={model} timing={timing} date={value} />} */}
+                <PaypalButton model={model} timing={timing} date={value} />
             </Grid>
-            {/* <h3>{JSON.stringify(timing)}</h3> */}
-            {/*<h3>result arr: {JSON.stringify(result)}</h3> */}
+            <div style={{display:'flex',flexDirection:'column'}}>
+            <h3>{JSON.stringify(timing)}</h3><br/>
+            <h3>result arr: {JSON.stringify(result.flat(1))}</h3>
+            </div>
             {/*<h3>{JSON.stringify(model)}</h3>
             <h3>{model && `${new Date(model.created_at).toLocaleDateString( )} ${new Date(model.created_at).getFullYear()}`}</h3> */}
         </Grid>

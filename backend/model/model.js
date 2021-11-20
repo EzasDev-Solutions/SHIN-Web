@@ -57,7 +57,8 @@ const modelDB = {
     },
     getModelSlots: (data) => {
         return new Promise((resolve, reject) => {
-            pool.query('Select * from `order` o, model_booked_slots mbs where o.fk_model_id =? and o.date =?',
+            pool.query('Select * from `order` o, model_booked_slots mbs where o.order_id = mbs.fk_order_id and ' 
+            +'o.fk_model_id =? and o.date =?',
                 [data.model_id, data.date], (error, result) => {
                     if (error) {
                         return reject({ status: 500, msg: error })

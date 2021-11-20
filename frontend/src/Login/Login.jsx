@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Modal, Button } from '@material-ui/core'
 import { login, register, setApiToken, getApiToken, setUserInfo, getUserInfo, logout } from '../Services/authService'
 import { MdClose } from "react-icons/md";
-import { VscAccount } from "react-icons/vsc"
 import user from "../assets/images/user.png";
-export default function Login({ openModal, setOpenModal }) {
+export default function Login({ openModal, setOpenModal, setIsLoggedIn }) {
     const [modalNo, setModalNo] = useState(1)
     // I use uncontrolled forms(using the event object instead of setting states)
     const onRegister = (e) => {
@@ -22,11 +21,12 @@ export default function Login({ openModal, setOpenModal }) {
         e.preventDefault()
         login({ email: e.target.email.value, password: e.target.password.value })
         setOpenModal(false)
-        window.location.reload()
+        setIsLoggedIn(true)
     }
     const onLogout = () => {
         logout(JSON.parse(localStorage.getItem('user')).user_id)
         setOpenModal(false)
+        setIsLoggedIn(false)
         window.location = 'http://localhost:3000/'
     }
     return (

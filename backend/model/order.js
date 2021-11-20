@@ -2,7 +2,15 @@ const pool = require('./databaseConfig')
 
 const orderDB = {
     getOrderByOrderId: (data) => {
-
+        return new Promise((resolve, reject) => {
+            pool.query('Select * from `order` o, model_booked_slots mbs where o.order_id = mbs.fk_order_id and o.order_id=?',
+                data.order_id, (error, result) => {
+                    if (error) {
+                        return reject({ status: 500, msg: error })
+                    }
+                    resolve({ status: 200, result: result })
+                })
+        })
     },
     getOrderByUserId: (data) => {
         return new Promise((resolve, reject) => {
