@@ -15,7 +15,7 @@ const userDB = {
                 values[2] = hash
                 pool.query(`Insert INTO user(username, email, password, role) values (?,?,?,?)`, values, (error, result) => {
                     if (error) {
-                        if (error.code === 'ER_DUP_ENTRY') return reject({ status: 403, msg: `Email ${values[1]} is already in use` })
+                        if (error.code === 'ER_DUP_ENTRY') return reject({ status: 400, msg: `Email ${values[1]} is already in use` })
                         return reject({ status: 500, msg: error })
                     }
                     resolve({ status: 201, result: result });

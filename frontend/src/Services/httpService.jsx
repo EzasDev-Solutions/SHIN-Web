@@ -9,10 +9,13 @@ axios.interceptors.response.use(null, error => {
   console.log("error.response", error.response)
   if(error.response && error.response.status === 401){     
       window.location = "/";     
-      swal("", "Unauthorized Access", "error");  
+      swal("Unauthorized Access", error.response.data, "error");  
+  }
+  else if(error.response && error.response.status === 400) {
+      swal("Bad Request",  error.response.data, "error");
   }
   else {
-      swal("Unexpected Error",  error.response.data, "error");
+    swal("Unexpected Error",  error.response.data, "error");
   }
 
   return Promise.reject(error);
