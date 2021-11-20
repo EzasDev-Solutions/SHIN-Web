@@ -7,14 +7,9 @@ import userIcon from "../../assets/images/user-icon.png";
 import searchIcon from "../../assets/images/search-icon.png";
 import shinLogo from "../../assets/images/shin-logo.png";
 import Login from '../../Login/Login';
-function Navbar(props) {
+function Navbar({ children, setIsLoggedIn, isLoggedIn }) {
     const [openModal, setOpenModal] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    useEffect(() => {
-        if (localStorage.getItem('apiToken')) {
-            setIsLoggedIn(true)
-        }
-    }, [])
+    
     // This kind of function I usually just put at the button onClick={() => setOpenModal(true)} since it does one thing only
     const openAccountModal = () => {
         setOpenModal(true);
@@ -52,7 +47,7 @@ function Navbar(props) {
                 </ul>
             </nav>
             <main>
-                {props.children}
+                {children}
             </main>
             <Login openModal={openModal} setOpenModal={setOpenModal} setIsLoggedIn={setIsLoggedIn} />
         </div>

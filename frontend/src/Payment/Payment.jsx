@@ -75,7 +75,7 @@ export default function Payment() {
     }, [timing])
     return (
         <Grid container>
-            <Grid item lg={3.5} md={12} sm={12} xs={12} sx={{ pt: 4, pl: 4 }}>
+            <Grid item lg={3.5} md={12} sm={12} xs={12} sx={{ pt: 4 }}>
                 {model && <img src={model.image_link[0]} width={260} height={360} alt={model.model_name} />}
             </Grid>
             <Grid item lg={5.5} md={7} sm={12} xs={12} sx={{ pt: 4 }}>
@@ -128,7 +128,7 @@ export default function Payment() {
                                     cursor: 'pointer', width: 120, height: 50, paddingTop: 10, marginRight: 40, fontSize: 18,
                                     fontFamily: 'Segoe UI'
                                 }} onClick={() => bookTime(time)}>
-                                    {time > 12 ? time - 12 : time} : 00 {index === 0 && i === 0 ? 'a' : 'p'}m
+                                    {time > 12 ? time - 12 : time} : 00 {time < 12 ? 'am' : 'pm'}
                                 </div>
                             ))}
                         </div>
@@ -136,22 +136,19 @@ export default function Payment() {
                 </div>
             </Grid>
             <Grid item lg={3} md={5} sm={12} xs={12} sx={{ pt: 4, textAlign: 'left', paddingInline: 5 }}>
-                <h2 style={{ fontWeight: 'bold' }}>Summary</h2>
+                <h3 style={{ fontWeight: 'bold' }}>Summary</h3>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40 }}>
-                    <h4>Subtotal</h4>
-                    <h4>${amount}</h4>
+                    <h5>Subtotal</h5>
+                    <h5>${amount}</h5>
                 </div>
                 <hr style={{ marginLeft: 0, marginTop: 20 }} />
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 30 }}>
-                    <h4>Total</h4>
-                    <h4>SGD <span><b>${amount}</b></span></h4>
+                    <h5>Total</h5>
+                    <h5>SGD <span><b>${amount}</b></span></h5>
                 </div>
                 <PaypalButton model={model} timing={timing} date={value} />
             </Grid>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <h3>{JSON.stringify(timing)}</h3><br />
-                <h3>result arr: {JSON.stringify(result.flat(1))}</h3>
-            </div>
+
             {/*<h3>{JSON.stringify(model)}</h3>
             <h3>{model && `${new Date(model.created_at).toLocaleDateString( )} ${new Date(model.created_at).getFullYear()}`}</h3> */}
         </Grid>

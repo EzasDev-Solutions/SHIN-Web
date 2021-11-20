@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import PhotoGallery from './PhotoGallery'
 import listingsService from '../Services/listingsService';
 import "./ListingDetails.css";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import locationIcon from "../assets/images/location-icon.png"
 import arrowIcon from "../assets/images/arrows.png"
-import Login from '../Login/Login';
+import Login from '../Login/Login'; 
 
-function ListingDetails() {
+function ListingDetails({ setIsLoggedIn, isLoggedIn }) {
     useEffect(() => {
         getModelDetailsData();
     }, []);
@@ -16,6 +16,8 @@ function ListingDetails() {
     const [loader, setloader] = useState(false);
     const [model, setmodel] = useState(null);
     const [images, setimages] = useState([])
+
+    const history = useHistory();
     let { id } = useParams();
 
     const getModelDetailsData = async () => {
@@ -27,7 +29,11 @@ function ListingDetails() {
     }
 
     const handleBooking = () => {
-        if (localStorage.getItem('apiToken') === null) setOpenModal(true)
+        if (localStorage.getItem('apiToken') === null) {
+            setOpenModal(true);
+        } else {
+            history.push(`/payment/${id}`);
+        }
     }
 
     return (
@@ -73,8 +79,7 @@ function ListingDetails() {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="book-btn shadow" onClick={handleBooking}>
-                                        {localStorage.getItem('apiToken') === null ? 'Book' :
-                                            <Link to={`/payment/${id}`} style={{ color: '#FFF' }}>Book</Link>}
+                                        Book
                                     </div>
                                 </div>
 
@@ -101,9 +106,18 @@ function ListingDetails() {
                     </div>
                 </div>
             </div>
-            {openModal && <Login openModal={openModal} setOpenModal={setOpenModal} />}
+            {openModal && 
+                <Login 
+                    openModal={openModal} 
+                    setOpenModal={setOpenModal} 
+                    setIsLoggedIn={setIsLoggedIn} 
+                    from="listingDetails" 
+                    id={id} 
+                />
+            }
         </div>
     )
 }
+
 
 export default ListingDetails

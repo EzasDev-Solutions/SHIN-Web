@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -13,6 +13,14 @@ import OrderHistory from '../OrderHistory/OrderHistory';
 import Payment from '../Payment/Payment';
 
 function Routes() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        if (localStorage.getItem('apiToken')) {
+            setIsLoggedIn(true)
+        }
+    }, [])
+
     return (
         <Router>
             <Switch>
@@ -21,33 +29,41 @@ function Routes() {
                 </Route>
 
                 <Route exact path="/ladies">
-                    <Navbar>
+                    <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} >
                         <ListingsPage category="Ladies" />
                     </Navbar>
                 </Route>
 
                 <Route exact path="/men">
-                    <Navbar>
+                    <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                         <ListingsPage category="Men" />
                     </Navbar>
                 </Route>
 
                 <Route exact path="/model/:id">
-                    <Navbar>
-                        <ListingDetails />
+                    <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+                        <ListingDetails isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
                     </Navbar>
                 </Route>
 
                 <Route exact path="/orderHistory">
-                    <Navbar>
-                        <OrderHistory />
-                    </Navbar>
+                    {isLoggedIn 
+                    ? (<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+                            <OrderHistory />
+                        </Navbar>)
+                    : (
+                        <Redirect to="/ladies"></Redirect>
+                    )}
                 </Route>
 
                 <Route exact path="/payment/:id">
-                    <Navbar>
-                        <Payment />
-                    </Navbar>
+                    {isLoggedIn 
+                    ? (<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+                            <Payment />
+                        </Navbar>)
+                    : (
+                        <Redirect to="/ladies"></Redirect>
+                    )}
                 </Route>
             </Switch>
         </Router>

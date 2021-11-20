@@ -6,17 +6,16 @@ import authService from "./authService";
 axios.defaults.baseURL = "http://localhost:8000";
 
 axios.interceptors.response.use(null, error => {
-    console.log('error.response: ',error) 
-    if(error.response && error.response.status === 401){     
-        window.location = "/";     
-        swal("", "Unauthorized Access", "error");  
-    }
-    else
-    {
-        swal("Unexpected Error",  error.response.message, "error");
-    }
-  
-    return Promise.reject(error);
+  console.log("error.response", error.response)
+  if(error.response && error.response.status === 401){     
+      window.location = "/";     
+      swal("", "Unauthorized Access", "error");  
+  }
+  else {
+      swal("Unexpected Error",  error.response.data, "error");
+  }
+
+  return Promise.reject(error);
 });
 
 const setApiTokenHeader = () => {

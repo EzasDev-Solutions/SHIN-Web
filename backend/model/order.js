@@ -33,7 +33,7 @@ const orderDB = {
         return new Promise((resolve, reject) => {
             pool.query('Insert INTO `order` (fk_model_id, total_amount, date, duration, transaction_id, fk_user_id) values (?,?,?,?,?,?)',
                 values.slice(0, 6), (error, result) => {
-                    console.log(error)
+                    console.log("Error",error)
                     if (error) {
                         return reject({ status: 500, msg: error.message })
                     }
@@ -42,7 +42,7 @@ const orderDB = {
                         pool.query(`Insert INTO model_booked_slots(start_time, end_time, fk_order_id) values (?,?,?)`,
                             [`${startTimes[i]}:00:00`, `${startTimes[i] + 1}:00:00`, result.insertId], (err2, result2) => {
                                 if (err2) {
-                                    return reject({ status: 500, msg: error.message })
+                                    return reject({ status: 500, msg: err2.message })
                                 }
                                 resolve({ status: 201, result: result });
                             })

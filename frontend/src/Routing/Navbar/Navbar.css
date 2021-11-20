@@ -25,8 +25,6 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 680px;
-    height: 738px;
     background-color: #FFF;
     border-radius: 6px;
     outline: none;
