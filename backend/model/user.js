@@ -24,6 +24,7 @@ const userDB = {
         })
     },
     userLogin: (data) => {
+        let sql = 'Insert into token(token, fk_user_id) values (?,?);Select token from token where fk_user_id = ?'
         return new Promise((resolve, reject) => {
             pool.query(`Select * from user where email =?`, data.email, (error, result) => {
                 if (error) return reject({ status: 500, msg: error })
@@ -33,12 +34,14 @@ const userDB = {
                     if (!valid) return reject({ status: 400, msg: 'Incorrect password' })
                     pool.query(`Select * from token where fk_user_id = ?`, result[0].user_id, (error, result2) => {
                         if (error) return reject({ status: 500, msg: error })
-                        if (result2.length !== 0) return reject({ status: 403, msg: 'User is already logged in' })
-                        pool.query(`Insert into token(token, fk_user_id) values (?,?);Select token from token where fk_user_id = ?`,
-                            [uuidv4(), result[0].user_id, result[0].user_id], (error, result3) => {
-                                if (error) return reject({ status: 500, msg: error })
-                                resolve({ status: 200, result: { result: result[0], apiToken: result3[1][0].token } })
-                            })
+                        // if (result2.length !== 0) return reject({ status: 403, msg: 'User is already logged in' })
+                        if (result2.length !== 0) {
+                            sql = 'Update token set token=? where fk_user_id=?;Select token from token where fk_user_id = ?'
+                        }
+                        pool.query(sql, [uuidv4(), result[0].user_id, result[0].user_id], (error, result3) => {
+                            if (error) return reject({ status: 500, msg: error })
+                            resolve({ status: 200, result: { result: result[0], apiToken: result3[1][0].token } })
+                        })
                     })
                 })
             })
