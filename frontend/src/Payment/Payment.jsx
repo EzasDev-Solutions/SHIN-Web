@@ -55,7 +55,7 @@ export default function Payment() {
             newTiming = newTiming.filter(t => t !== time)
             setTiming(newTiming)
             return
-        }   
+        }
         newTiming.push(time)
         setTiming([...newTiming])
     }
@@ -135,32 +135,22 @@ export default function Payment() {
                     ))}
                 </div>
             </Grid>
-            <Grid item lg={3} md={5} sm={12} xs={12} sx={{ pt: 4, textAlign: 'left' }}>
+            <Grid item lg={3} md={5} sm={12} xs={12} sx={{ pt: 4, textAlign: 'left', pr: 4 }}>
                 <h2 style={{ fontWeight: 'bold' }}>Summary</h2>
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: 400, marginTop: 40 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40 }}>
                     <h4>Subtotal</h4>
                     <h4>${amount}</h4>
                 </div>
-                <hr style={{ width: 400, marginLeft: 0, marginTop: 20 }} />
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: 400, marginTop: 30 }}>
+                <hr style={{ marginLeft: 0, marginTop: 20 }} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 30 }}>
                     <h4>Total</h4>
                     <h4>SGD <span><b>${amount}</b></span></h4>
                 </div>
-                {/* {!checkout ? <Button sx={{
-                    fontFamily: 'Segoe UI', backgroundColor: '#3D3D3D', color: '#FFF', mt: 5, width: 400, height: 40,
-                    textTransform: 'none'
-                }} onClick={() => {
-                    if (amount > 0) setCheckout(true)
-                    else {
-                        alert('Select a time slot')
-                    }
-                }}>Checkout</Button> :
-                    <PaypalButton model={model} timing={timing} date={value} />} */}
                 <PaypalButton model={model} timing={timing} date={value} />
             </Grid>
-            <div style={{display:'flex',flexDirection:'column'}}>
-            <h3>{JSON.stringify(timing)}</h3><br/>
-            <h3>result arr: {JSON.stringify(result.flat(1))}</h3>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <h3>{JSON.stringify(timing)}</h3><br />
+                <h3>result arr: {JSON.stringify(result.flat(1))}</h3>
             </div>
             {/*<h3>{JSON.stringify(model)}</h3>
             <h3>{model && `${new Date(model.created_at).toLocaleDateString( )} ${new Date(model.created_at).getFullYear()}`}</h3> */}

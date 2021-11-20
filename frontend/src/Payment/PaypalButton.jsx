@@ -55,7 +55,7 @@ export default function PaypalButton({ model, timing, date }) {
     }, [timing, date])
     return (
         <>
-            <div ref={paypalRef} style={{ width: 400, marginTop: 50 }} />
+            <div ref={paypalRef} style={{ marginTop: 50 }} />
         </>
     )
 }
