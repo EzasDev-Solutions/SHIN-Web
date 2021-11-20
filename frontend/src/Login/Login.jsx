@@ -34,11 +34,11 @@ export default function Login({ openModal, setOpenModal, setIsLoggedIn, from, id
             history.push(`/payment/${id}`)
         }
     }
-    const onLogout = () => {
-        logout(JSON.parse(localStorage.getItem('user')).user_id)
-        setOpenModal(false)
-        setIsLoggedIn(false)
-        window.location = 'http://localhost:3000/'
+    const onLogout = async () => {
+        await logout(JSON.parse(localStorage.getItem('user')).user_id);
+        setOpenModal(false);
+        setIsLoggedIn(false);
+        history.push('/');
     }
     return (
         <Modal open={openModal} onClose={() => { setOpenModal(false); setModalNo(1) }}>

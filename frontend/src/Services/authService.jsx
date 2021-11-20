@@ -8,7 +8,6 @@ export async function login(data) {
     if (response && response.data) {
         setApiToken(response.data.apiToken);
         setUserInfo(response.data.result)
-        // window.location.reload()
     }
     return response;
 }

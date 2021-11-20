@@ -120,7 +120,9 @@ export default function Payment() {
                     </Stack>
                 </LocalizationProvider>
                 <div style={{ marginTop: 60 }}>
-                    {result.map((arr, index) => (
+                    {result.length === 0
+                    ? "No Time Slot Available"
+                    : result.map((arr, index) => (
                         <div key={index} style={{ display: 'flex', marginTop: 20 }}>
                             {arr.map((time, i) => (
                                 <div key={i} style={{

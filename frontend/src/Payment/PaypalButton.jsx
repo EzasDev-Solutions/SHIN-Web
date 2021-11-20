@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useHistory } from 'react-router'
+import swal from 'sweetalert';
 import { addOrder } from '../Services/orderService'
 
 export default function PaypalButton({ model, timing, date }) {
-    let paypalRef = useRef()
+    let paypalRef = useRef();
+    const history = useHistory();
+
     useEffect(() => {
         if(window.myButton) window.myButton.close();
         window.myButton = window.paypal.Buttons({
@@ -38,17 +42,25 @@ export default function PaypalButton({ model, timing, date }) {
             },
             onApprove: async (data, actions) => {
                 const order = await actions.order.capture();
-                addOrder({
+                await addOrder({
                     fk_model_id: model.model_id, total_amount: model.rate * timing.length, date: date.toISOString().slice(0, 10),
                     duration: `${timing.length}hrs`, transaction_id: order.id,
                     fk_user_id: JSON.parse(localStorage.getItem('user')).user_id,
                     start_time: timing
                 })
+
                 console.log(order);
-                window.location = 'http://localhost:3000/orderHistory'
+                if(order.status === "COMPLETED") {
+                    swal("Payment Sucessful", "Booking has been made sucessfully", "success")
+                    history.push('/orderHistory');
+                } 
+                else {
+                    swal("Payment Unsucessful", "Payment not completed, booking has not been made", "error")
+                }
             },
             onError: err => {
                 console.error(err);
+                swal("Payment Unsucessful", JSON.stringify(err), "error")
             },
         })
         window.myButton.render(paypalRef.current)
